@@ -1,20 +1,21 @@
 package com.example.alanko.flyblock;
 
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class Backgroud {
+public class Middleground {
 
     private Bitmap image;
     private int x, y, dx;
 
-    public Backgroud(Bitmap res)
+    public Middleground(Bitmap res)
     {
         image = res;
     }
     public void update()
     {
-        dx = -(Missile.overallMissileSpeed / 10)-1;
+        dx = -(Missile.overallMissileSpeed / 7)-2;
         x+=dx;
         if(x<-GamePanel.WIDTH){
             x=0;

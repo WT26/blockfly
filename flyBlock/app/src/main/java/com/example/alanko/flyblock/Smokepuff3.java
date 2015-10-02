@@ -1,31 +1,30 @@
 package com.example.alanko.flyblock;
 
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 
 
-public class Smokepuff2 extends GameObject{
+public class Smokepuff3 extends GameObject{
     public int r;
-    public Smokepuff2(int x, int y)
+    public Smokepuff3(int x, int y)
     {
-        r = 5;
+        r = 7;
         super.x = x;
         super.y = y;
     }
     public void update()
     {
-        y+=8;
-        x-=8;
+        y+=4;
+        x-=6;
     }
     public void draw(Canvas canvas)
     {
         Paint paint = new Paint();
-        paint.setColor(Color.rgb(0,82,105));
+        paint.setColor(Color.rgb(0,107,136));
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(x+20, y + 45, r, paint);
+        canvas.drawCircle(x+10, y + 30, r, paint);
 
 
 

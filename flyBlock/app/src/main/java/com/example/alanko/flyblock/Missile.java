@@ -12,6 +12,7 @@ public class Missile extends GameObject{
     private Random rand = new Random();
     private Animation animation = new Animation();
     private Bitmap spritesheet;
+    public static int overallMissileSpeed;
 
     public Missile(Bitmap res, int x, int y, int w, int h, int s, int numFrames)
     {
@@ -41,6 +42,7 @@ public class Missile extends GameObject{
     }
     public void update()
     {
+        Missile.overallMissileSpeed = speed;
         x-=speed;
         animation.update();
     }

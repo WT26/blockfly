@@ -23,9 +23,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     private long missileStartTime;
     private MainThread thread;
     private Backgroud bg;
+    private Frontground fg;
+    private Middleground mg;
     private Player player;
     private ArrayList<Smokepuff> smoke;
-    //private ArrayList<Smokepuff2>smoke2;
+    private ArrayList<Smokepuff2>smoke2;
+    private ArrayList<Smokepuff3>smoke3;
     private ArrayList<Missile> missiles;
     private ArrayList<TopBorder> topborder;
     private ArrayList<BotBorder> botborder;
@@ -87,9 +90,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder){
 
         bg = new Backgroud(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
+        fg = new Frontground(BitmapFactory.decodeResource(getResources(), R.drawable.frontground));
+        mg = new Middleground(BitmapFactory.decodeResource(getResources(), R.drawable.middleground));
         player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.flyblock2), 41, 31, 8);
         smoke = new ArrayList<Smokepuff>();
-        //smoke2 = new ArrayList<Smokepuff2>();
+        smoke2 = new ArrayList<Smokepuff2>();
+        smoke3 = new ArrayList<Smokepuff3>();
         missiles = new ArrayList<Missile>();
         topborder = new ArrayList<TopBorder>();
         botborder = new ArrayList<BotBorder>();
@@ -146,6 +152,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             }
 
             bg.update();
+            fg.update();
+            mg.update();
             player.update();
 
             //calculate the threshold of height the border can have based on the score
@@ -155,7 +163,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             maxBorderHeight = 30+player.getScore()/progressDenom;
             //cap max border height so that borders can only take up a total of 1/2 the screen
             if(maxBorderHeight > HEIGHT/4)maxBorderHeight = HEIGHT/4;
-            minBorderHeight = 5+player.getScore()/progressDenom;
+            minBorderHeight = 20+player.getScore()/progressDenom;
 
             //check bottom border collision
             for(int i = 0; i<botborder.size(); i++)
@@ -222,29 +230,38 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             long elapsed = (System.nanoTime() - smokeStartTime)/1000000;
             if(elapsed > 120){
                 smoke.add(new Smokepuff(player.getX(), player.getY()+10));
-                //smoke2.add(new Smokepuff2(player.getX(), player.getY()+10));
+                smoke2.add(new Smokepuff2(player.getX(), player.getY()+10));
+                smoke3.add(new Smokepuff3(player.getX(), player.getY()+10));
                 smokeStartTime = System.nanoTime();
             }
 
             for(int i = 0; i<smoke.size();i++)
             {
                 smoke.get(i).update();
-                if(smoke.get(i).getX()<-10)
+                if(smoke.get(i).getX()<-20)
                 {
                     smoke.remove(i);
                 }
             }
 
-            /*
+
             for(int i = 0; i<smoke2.size();i++)
             {
                 smoke2.get(i).update();
-                if(smoke2.get(i).getX()<-10)
+                if(smoke2.get(i).getX()<-20)
                 {
                     smoke2.remove(i);
                 }
             }
-            */
+            for(int i = 0; i<smoke3.size();i++)
+            {
+                smoke3.get(i).update();
+                if(smoke3.get(i).getX()<-20)
+                {
+                    smoke3.remove(i);
+                }
+            }
+
 
         }
         else{
@@ -256,7 +273,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
                 reset = true;
                 dissapear = true;
                 explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getX(),
-                        player.getY()-30, 100, 100, 25);
+                        player.getY()-30, 80, 80, 25);
             }
 
             explosion.update();
@@ -289,11 +306,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             final int savedState = canvas.save();
             canvas.scale(scaleFactorX, scaleFactorY);
             bg.draw(canvas);
+            mg.draw(canvas);
+
             if(!dissapear) {
                 player.draw(canvas);
             }
             //draw smokepuffs
             for(Smokepuff sp: smoke)
+            {
+                sp.draw(canvas);
+            }
+            for(Smokepuff2 sp: smoke2)
+            {
+                sp.draw(canvas);
+            }
+            for(Smokepuff3 sp: smoke3)
             {
                 sp.draw(canvas);
             }
@@ -315,6 +342,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             {
                 bb.draw(canvas);
             }
+
+            //draw frontground
+            fg.draw(canvas);
+
+
             //draw explosion
             if(started)
             {
@@ -420,6 +452,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         missiles.clear();
         smoke.clear();
+        smoke2.clear();
+        smoke3.clear();
 
         minBorderHeight = 5;
         maxBorderHeight = 30;
@@ -478,7 +512,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setTextSize(30);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        paint.setTypeface(Typeface.create(Typeface.SERIF, Typeface.BOLD));
         canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
         canvas.drawText("BEST: " + best, WIDTH - 215, HEIGHT - 10, paint);
 
@@ -486,7 +520,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         {
             Paint paint1 = new Paint();
             paint1.setTextSize(40);
-            paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            paint1.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
             canvas.drawText("PRESS TO START", WIDTH/2-50, HEIGHT/2, paint1);
 
             paint1.setTextSize(20);

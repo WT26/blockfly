@@ -20,6 +20,7 @@ public class TopBorder extends GameObject{
     }
     public void update()
     {
+        dx = -(Missile.overallMissileSpeed/5)-3;
         x+=dx;
     }
     public void draw(Canvas canvas)

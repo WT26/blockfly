@@ -21,6 +21,7 @@ public class BotBorder extends GameObject{
     }
     public void update()
     {
+        dx = -(Missile.overallMissileSpeed/5)-3;
         x +=dx;
 
     }
