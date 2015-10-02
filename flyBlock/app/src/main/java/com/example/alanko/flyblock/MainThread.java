@@ -3,9 +3,7 @@ package com.example.alanko.flyblock;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-/**
- * Created by Alanko on 28.9.2015.
- */
+
 public class MainThread extends Thread
 {
     private int FPS = 30;

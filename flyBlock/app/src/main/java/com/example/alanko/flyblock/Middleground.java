@@ -29,8 +29,5 @@ public class Middleground {
             canvas.drawBitmap(image, x+GamePanel.WIDTH, y, null);
         }
     }
-    public void setVector(int dx)
-    {
-        this.dx = dx;
-    }
+
 }
