@@ -22,7 +22,7 @@ public class Smokepuff3 extends GameObject{
     public void draw(Canvas canvas)
     {
         Paint paint = new Paint();
-        paint.setColor(Color.rgb(0,107,136));
+        paint.setColor(Color.rgb(0,82,135));
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(x+10, y + 30, r, paint);
 
