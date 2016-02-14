@@ -1,21 +1,20 @@
-package com.example.alanko.flyblock;
-
+package wt.flyblock;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class Middleground {
+public class Frontground {
 
     private Bitmap image;
     private int x, y, dx;
 
-    public Middleground(Bitmap res)
+    public Frontground(Bitmap res)
     {
         image = res;
     }
     public void update()
     {
-        dx = -(Missile.overallMissileSpeed / 7)-2;
+        dx = -(Missile.overallMissileSpeed/5)-3;
         x+=dx;
         if(x<-GamePanel.WIDTH){
             x=0;
@@ -29,5 +28,8 @@ public class Middleground {
             canvas.drawBitmap(image, x+GamePanel.WIDTH, y, null);
         }
     }
-
+    public void setVector(int dx)
+    {
+        this.dx = dx;
+    }
 }

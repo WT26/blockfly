@@ -1,4 +1,4 @@
-package com.example.alanko.flyblock;
+package wt.flyblock;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

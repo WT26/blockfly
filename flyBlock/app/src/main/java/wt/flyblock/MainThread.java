@@ -1,4 +1,4 @@
-package com.example.alanko.flyblock;
+package wt.flyblock;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
